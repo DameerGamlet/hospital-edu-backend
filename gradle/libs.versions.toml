@@ -1,0 +1,50 @@
+[versions]
+lombok-version = "1.18.36"
+swagger-version = "2.2.26"
+springdoc-version = "1.8.0"
+junit-version = "5.11.3"
+mockito-version = "5.14.2"
+guava-version = "33.3.1-jre"
+mapstruct-version = "1.6.3"
+
+aspectj-version = "1.9.22.1"
+
+spring-boot-version = "3.4.0"
+spring-security-version = "6.4.1"
+
+postgres-version = "42.7.4"
+
+apache-commons-lang3-version = "3.17.0"
+apache-commons-validator-version = "1.9.0"
+apache-commons-collections-version = "4.4"
+
+[libraries]
+spring-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator", version.ref = "spring-boot-version" }
+spring-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot-version" }
+aspectj-aop = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj-version" }
+swagger-annotation = { module = "io.swagger.core.v3:swagger-annotations", version.ref = "swagger-version" }
+
+# Зависимость для написания тестов в Spring Boot.
+
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "spring-boot-version" }
+
+springdoc-openapi = { group = "org.springdoc", name = "springdoc-openapi-ui", version.ref = "springdoc-version" }
+lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok-version" }
+
+spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "spring-boot-version" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgres-version" }
+
+guava = { module = "com.google.guava:guava", version.ref = "guava-version" }
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct-version" }
+
+# Зависимость для использования Apache Commons Lang3.
+apache-commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "apache-commons-lang3-version" }
+# Зависимость для валидации данных с использованием Apache Commons Validator.
+apache-commons-validator = { group = "commons-validator", name = "commons-validator", version.ref = "apache-commons-validator-version" }
+# Зависимость для работы с коллекциями в Apache Commons.
+apache-commons-collections = { group = "org.apache.commons", name = "commons-collections4", version.ref = "apache-commons-collections-version" }
+
+# * TESTS *
+test-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junit-version" }
+test-mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-version" }
+test-mockito-junit = { group = "org.mockito", name = "mockito-junit-jupiter", version.ref = "mockito-version" }
