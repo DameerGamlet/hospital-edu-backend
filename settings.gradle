@@ -1,2 +1,5 @@
 rootProject.name = 'hospital-edu-backend'
+include 'user-service'
+include 'appointment-service'
+include 'notification-service'
 

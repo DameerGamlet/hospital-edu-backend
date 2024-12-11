@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'edu.medical.demo.common-plugins'
+    id 'edu.medical.demo.spring-web-template'
+}
+
+group = 'edu.medical.demo'
+version = '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+test {
+    useJUnitPlatform()
+}

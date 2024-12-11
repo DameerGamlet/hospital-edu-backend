@@ -3,26 +3,28 @@
 ## Шаг 1: Настройка проекта и инфраструктуры
 
 ### Репозиторий и структура
-- [ ] Создать monorepo репозиторий на GitHub.
-- [ ] Настроить структуру папок:
+
+- [X] Создать monorepo репозиторий на GitHub.
+- [X] Настроить структуру папок:
   ```
   hospital-edu/
-  ├── services/
-  │   ├── user-service/
-  │   ├── appointment-service/
-  │   └── notification-service/
-  ├── frontend/
+  ├── user-service/
+  ├── appointment-service/
+  ├── notification-service/
   ├── docker-compose.yml
   └── README.md
   ```
-- [ ] Добавить корневой `pom.xml` для управления модулями.
+- [X] Добавить корневой `settings.gradle` для управления модулями.
+- [Х] Добавить общий плагин для управления зависимостями внутри проекта.
 
 ### Docker Compose
+
 - [ ] Добавить базовый `docker-compose.yml`:
-    - MongoDB.
-    - PostgreSQL.
-    - Kafka.
-    - Maildev.
+    - [ ] MongoDB.
+    - [X] PostgreSQL.
+    - [ ] Kafka.
+    - [X] Maildev.
+
 - [ ] Проверить запуск инфраструктурных сервисов через `docker-compose up`.
 
 ---
@@ -30,8 +32,8 @@
 ## Шаг 2: Реализация `user-service`
 
 ### Создание сервиса
-- [ ] Создать папку `services/user-service`.
-- [ ] Инициализировать проект Spring Boot через Spring Initializr.
+- [X] Создать папку `services/user-service`.
+- [X] Инициализировать проект Spring Boot через Spring Initializr.
 - [ ] Добавить зависимости: **Spring Web**, **Spring Data MongoDB**, **Lombok**, **DevTools**.
 
 ### Настройка MongoDB
