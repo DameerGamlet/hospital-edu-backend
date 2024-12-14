@@ -16,7 +16,7 @@ services:
   mongo-express:
     image: mongo-express
     container_name: hospital-mongo-express-container
-    restart: always
+    restart: no
     ports:
       - "6001:6001"
     environment:
@@ -30,6 +30,7 @@ services:
   postgres:
     image: postgres:17.2-alpine
     container_name: hospital-postgres-container
+    restart: no
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     environment:
@@ -42,6 +43,7 @@ services:
   zookeeper:
     image: bitnami/zookeeper:3.8
     container_name: hospital-zookeeper-container
+    restart: no
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
@@ -50,6 +52,7 @@ services:
   kafka:
     image: bitnami/kafka:3.8
     container_name: hospital-kafka-container
+    restart: no
     depends_on:
       - zookeeper
     environment:
@@ -65,6 +68,7 @@ services:
   maildev:
     image: maildev/maildev:latest
     container_name: hospital-maildev-container
+    restart: no
     ports:
       - "${MAILDEV_WEB_PORT}:${MAILDEV_WEB_PORT}" # Web UI
       - "${MAILDEV_SMTP_PORT}:${MAILDEV_SMTP_PORT}" # SMTP

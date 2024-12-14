@@ -2,6 +2,9 @@ plugins {
     id 'java'
     id 'edu.medical.demo.common-plugins'
     id 'edu.medical.demo.spring-web-template'
+    id 'edu.medical.demo.spring-data-template'
+    id 'edu.medical.demo.spring-postgres-template'
+    id 'edu.medical.demo.spring-kafka-template'
     id 'edu.medical.demo.test-template'
 }
 
