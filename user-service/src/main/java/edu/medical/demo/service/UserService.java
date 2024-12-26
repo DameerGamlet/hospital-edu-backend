@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public interface UserService {
     User getUserByUserId(UUID userId);
+
     UUID createUser(CreateUserRequest request) throws JsonProcessingException;
+
     List<User> getUsers();
 }
