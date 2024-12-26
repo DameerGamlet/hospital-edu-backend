@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group = 'edu.medical.demo'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+test {
+    useJUnitPlatform()
+}
