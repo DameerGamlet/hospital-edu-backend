@@ -1,0 +1,76 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: notification-service
+  kafka:
+    bootstrap-servers: localhost:${KAFKA_PORT}
+  mail:
+    host: localhost
+    port: 1025
+    username: hospital.demo-support@gmail.com
+    password: password
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
+message-mail: |
+  <div style="text-align: center;">    
+    <h1>Больница</h1>    
+    <p>Описание</p>    
+    <hr>    
+    <h2>Активация аккаунта</h2>    
+    <p>%s, спасибо за регистрацию в нашей системе. Для активации вашего аккаунта нажмите на кнопку ниже:</p>
+    <br>
+    <a href="%s" 
+      style="
+        display: inline-block; 
+        padding: 12px 24px; 
+        background-color: #007bff; 
+        color: #fff; 
+        text-decoration: none; 
+        font-size: 18px;">Активировать аккаунт</a>   
+    <br><br>    
+    <p>Если кнопка выше не работает, вы также можете скопировать и вставить следующую ссылку в адресную строку вашего браузера:</p>   
+    <a href="%s">%s</a>   
+    <hr>   
+
+    <h3>Ваш код активации</h3>
+    <div id="activationCode" style="font-size: 24px; letter-spacing: 10px; font-weight: bold;">
+        %s
+    </div>
+    <br>
+    <button id="copyButton" style="
+      padding: 10px 20px; 
+      background-color: #28a745; 
+      color: #fff; 
+      border: none; 
+      font-size: 16px; 
+      cursor: pointer;">
+      Копировать
+    </button>
+  
+    <script>
+        document.getElementById('copyButton').addEventListener('click', function() {
+            var code = document.getElementById('activationCode').innerText;
+            var textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Код скопирован в буфер обмена!');
+        });
+    </script>
+  
+    <hr>   
+    <p>Благодарим вас за использование нашего сервиса!</p>
+  </div>

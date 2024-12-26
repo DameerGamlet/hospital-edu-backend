@@ -2,9 +2,6 @@ plugins {
     id 'java'
     id 'edu.medical.demo.common-plugins'
     id 'edu.medical.demo.spring-web-template'
-    id 'edu.medical.demo.spring-data-template'
-    id 'edu.medical.demo.spring-postgres-template'
-    id 'edu.medical.demo.spring-kafka-template'
     id 'edu.medical.demo.test-template'
 }
 
@@ -16,6 +13,12 @@ repositories {
 }
 
 dependencies {
+    implementation libs.spring.boot.starter.data.jpa
+    implementation libs.jackson.databind
+
+    implementation libs.postgresql
+
+    implementation libs.spring.kafka
 }
 
 test {

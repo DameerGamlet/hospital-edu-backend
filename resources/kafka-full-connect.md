@@ -1,11 +1,15 @@
-С учетом вашей текущей конфигурации `docker-compose`, вот доработанный и подробный пример реализации `user-service` и `notification-service` для сценария отправки подтверждающего кода на email через Kafka. Мы будем использовать вашу инфраструктуру (MongoDB, PostgreSQL, Kafka, MailDev).
+С учетом вашей текущей конфигурации `docker-compose`, вот доработанный и подробный пример реализации `user-service` и
+`notification-service` для сценария отправки подтверждающего кода на email через Kafka. Мы будем использовать вашу
+инфраструктуру (MongoDB, PostgreSQL, Kafka, MailDev).
 
 ---
 
 ## 1. Дополнение `docker-compose.yml`
 
 ### Экспорт переменных среды
+
 Для упрощения управления портами и переменными среды добавьте файл `.env`:
+
 ```env
 MONGO_PORT=27017
 POSTGRES_PORT=5432
@@ -22,7 +26,9 @@ MAILDEV_SMTP_PORT=1025
 `user-service` будет взаимодействовать с PostgreSQL для хранения пользователей и публиковать события в Kafka.
 
 ### 2.1 Gradle-зависимости
+
 Обновите `build.gradle`:
+
 ```groovy
 plugins {
     id 'org.springframework.boot' version '3.1.0'
@@ -50,6 +56,7 @@ dependencies {
 ---
 
 ### 2.2 Конфигурация `application.properties`
+
 ```properties
 spring.datasource.url=jdbc:postgresql://hospital-postgres-container:${POSTGRES_PORT}/user_db
 spring.datasource.username=admin
@@ -63,6 +70,7 @@ spring.kafka.bootstrap-servers=hospital-kafka-container:${KAFKA_PORT}
 ### 2.3 Код для `user-service`
 
 #### Модель
+
 ```java
 @Entity
 public class User {
@@ -78,12 +86,14 @@ public class User {
 ```
 
 #### Репозиторий
+
 ```java
 public interface UserRepository extends JpaRepository<User, Long> {
 }
 ```
 
 #### Kafka Producer
+
 ```java
 @Service
 public class UserEventPublisher {
@@ -101,6 +111,7 @@ public class UserEventPublisher {
 ```
 
 #### Контроллер
+
 ```java
 @RestController
 @RequestMapping("/users")
@@ -124,6 +135,7 @@ public class UserController {
 ```
 
 #### Kafka Producer Config
+
 ```java
 @Configuration
 public class KafkaProducerConfig {
@@ -160,7 +172,9 @@ public class KafkaProducerConfig {
 ---
 
 ### 3.1 Gradle-зависимости
+
 Обновите `build.gradle`:
+
 ```groovy
 plugins {
     id 'org.springframework.boot' version '3.1.0'
@@ -187,6 +201,7 @@ dependencies {
 ---
 
 ### 3.2 Конфигурация `application.properties`
+
 ```properties
 spring.kafka.bootstrap-servers=hospital-kafka-container:${KAFKA_PORT}
 spring.mail.host=hospital-maildev-container
@@ -201,6 +216,7 @@ spring.mail.protocol=smtp
 ### 3.3 Код для `notification-service`
 
 #### Kafka Consumer
+
 ```java
 @Service
 public class NotificationService {
@@ -234,6 +250,7 @@ public class NotificationService {
 ```
 
 #### Kafka Consumer Config
+
 ```java
 @Configuration
 public class KafkaConsumerConfig {

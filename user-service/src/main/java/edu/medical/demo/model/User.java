@@ -1,5 +1,6 @@
 package edu.medical.demo.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,10 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -25,15 +30,24 @@ public class User {
 
     private UUID userId = UUID.randomUUID();
 
-    @NotNull
     @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
     @NotNull
+    @Column(nullable = false)
+    @Pattern(regexp = "^[A-Za-zА-Яа-яёЁ\\s]+$", message = "Имя должно быть читаемым")
     private String fullName;
 
-    public User(String email, String fullName) {
-        this.email = email;
-        this.fullName = fullName;
-    }
+    @NotNull
+    private Boolean isActive = false;
+
+    @NotNull
+    private Boolean archived = false;
+
+    @CreationTimestamp
+    private LocalDateTime createdDate;
+
+    @UpdateTimestamp
+    private LocalDateTime modifiedDate;
 }
