@@ -63,7 +63,7 @@ services:
     ports:
       - "${KAFKA_PORT}:${KAFKA_PORT}"
     volumes:
-      - kafka_data:/bitnami/kafka
+      - ./kafka-data:/bitnami/kafka/data
 
   maildev:
     image: maildev/maildev:latest
