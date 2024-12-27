@@ -6,6 +6,7 @@ import edu.medical.demo.exceptions.UserAlreadyArchivedException;
 import edu.medical.demo.model.User;
 import edu.medical.demo.model.dto.request.CreateUserRequest;
 import edu.medical.demo.models.request.ActivationMessage;
+import edu.medical.demo.repository.ActivationUserRepository;
 import edu.medical.demo.repository.UserRepository;
 import edu.medical.demo.service.KafkaProducerService;
 import edu.medical.demo.service.impl.UserServiceImpl;
@@ -39,6 +40,9 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
+    private ActivationUserRepository activationUserRepository;
+
+    @Mock
     private KafkaProducerService kafkaProducerService;
 
     private CreateUserRequest validRequest;
@@ -54,7 +58,7 @@ public class UserServiceTest {
      * Тест на случай, когда пользователь уже активен, и выбрасывается исключение UserAlreadyActiveException.
      */
     @Test
-    void createUser_EmailAlreadyActive_ThrowsException() {
+    void createUserEmailAlreadyActiveThrowsException() {
         final User existingUser = createUser(UUID.randomUUID(), validRequest.email(), validRequest.fullName(), true, false);
 
         when(userRepository.existsByEmail(validRequest.email())).thenReturn(true);
@@ -63,7 +67,7 @@ public class UserServiceTest {
         final UserAlreadyActiveException exception = assertThrows(UserAlreadyActiveException.class,
                 () -> userService.createUser(validRequest));
 
-        assertEquals("User with this email is already active. If this is not you, please contact support.",
+        assertEquals(UserAlreadyActiveException.DEFAULT_MESSAGE.formatted(existingUser.getEmail()),
                 exception.getMessage());
         verify(userRepository).existsByEmail(validRequest.email());
         verify(userRepository).findByUserEmail(validRequest.email());
@@ -73,7 +77,7 @@ public class UserServiceTest {
      * Тест на случай, когда пользователь архивирован, и выбрасывается исключение UserAlreadyArchivedException.
      */
     @Test
-    void createUser_UserArchived_ThrowsException() {
+    void createUserUserArchivedThrowsException() {
         final User existingUser = createUser(UUID.randomUUID(), validRequest.email(), validRequest.fullName(), false, true);
 
         when(userRepository.existsByEmail(validRequest.email())).thenReturn(true);
@@ -89,7 +93,7 @@ public class UserServiceTest {
      * Тест на случай, когда email не существует, создается новый пользователь и отправляется код активации.
      */
     @Test
-    void createUser_EmailNotExist_CreateNewUser() throws JsonProcessingException {
+    void createUserEmailNotExistCreateNewUser() throws JsonProcessingException {
         final UUID generatedUserId = UUID.randomUUID();
         final User savedUser = createUser(generatedUserId, validRequest.email(), validRequest.fullName(), false, false);
 
@@ -112,7 +116,7 @@ public class UserServiceTest {
      * Тест на случай, когда email уже существует, но пользователь неактивен, и отправляется код повторной активации.
      */
     @Test
-    void createUser_EmailAlreadyExist_InactiveUser_SendsReactivationCode() throws JsonProcessingException {
+    void createUserEmailAlreadyExistInactiveUserSendsReactivationCode() throws JsonProcessingException {
         final User existingUser = createUser(UUID.randomUUID(), validRequest.email(), validRequest.fullName(), false, false);
 
         when(userRepository.existsByEmail(validRequest.email())).thenReturn(true);
@@ -133,7 +137,7 @@ public class UserServiceTest {
      * Тест на случай, когда отправка кода активации не удалась, и метод возвращает null.
      */
     @Test
-    void createUser_SendingFails_ReturnsNull() throws JsonProcessingException {
+    void createUserSendingFailsReturnsNull() throws JsonProcessingException {
         when(userRepository.existsByEmail(validRequest.email())).thenReturn(false);
         when(kafkaProducerService.sendAuthenticationCode(any(ActivationMessage.class))).thenReturn(false);
 
@@ -150,7 +154,7 @@ public class UserServiceTest {
         user.setUserId(userId);
         user.setEmail(email);
         user.setFullName(fullName);
-        user.setIsActive(isActive);
+        user.setActive(isActive);
         user.setArchived(isArchived);
         return user;
     }

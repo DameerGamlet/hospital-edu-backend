@@ -40,10 +40,10 @@ public class User {
     private String fullName;
 
     @NotNull
-    private Boolean isActive = false;
+    private boolean isActive;
 
     @NotNull
-    private Boolean archived = false;
+    private boolean archived;
 
     @CreationTimestamp
     private LocalDateTime createdDate;

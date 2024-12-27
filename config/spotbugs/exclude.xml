@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- Предупреждение о классах, реализующих интерфейс Serializable, но не имеющих объявленного serialVersionUID -->
+    <Match>
+        <Source name="~.*\.groovy"/>
+        <Bug pattern="SE_NO_SERIALVERSIONID"/>
+    </Match>
+
+    <!-- Предупреждение о методах в файлах groovy, которые экспонируют внутренние представления объектов, которые могут быть изменены извне. -->
+    <Match>
+        <Source name="~.*\.groovy"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <!-- Предупреждение о методах в файлах java, которые экспонируют внутренние представления объектов, которые могут быть изменены извне-->
+    <Match>
+        <Source name="~.*\.java"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <!-- Предупреждение о методах, экспонирующих внутренние представления объектов. -->
+    <Match>
+        <Source name="~.*\.groovy"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+
+    <!-- Предупреждение о конструкторах, которые могут бросать исключения. -->
+    <Match>
+        <Source name="~.*\.groovy"/>
+        <Bug pattern="CT_CONSTRUCTOR_THROW"/>
+    </Match>
+
+    <!-- Предупреждение о том, что необходимо заменить \n на %n, что ухудшает читаемость код.
+         Подробнее: https://github.com/spotbugs/spotbugs/issues/1877
+     -->
+    <Match>
+        <Source name="~.*\.java"/>
+        <Bug pattern="VA_FORMAT_STRING_USES_NEWLINE"/>
+    </Match>
+</FindBugsFilter>

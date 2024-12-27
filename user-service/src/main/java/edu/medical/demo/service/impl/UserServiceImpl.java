@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.medical.demo.exceptions.UserAlreadyActiveException;
 import edu.medical.demo.exceptions.UserAlreadyArchivedException;
 import edu.medical.demo.exceptions.UserNotFoundException;
+import edu.medical.demo.model.ActivationUser;
 import edu.medical.demo.model.User;
 import edu.medical.demo.model.dto.request.CreateUserRequest;
 import edu.medical.demo.models.request.ActivationMessage;
 import edu.medical.demo.models.request.MailType;
+import edu.medical.demo.repository.ActivationUserRepository;
 import edu.medical.demo.repository.UserRepository;
 import edu.medical.demo.service.KafkaProducerService;
 import edu.medical.demo.service.UserService;
@@ -28,6 +30,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ActivationUserRepository activationUserRepository;
     private final KafkaProducerService kafkaProducerService;
 
     /**
@@ -48,23 +51,23 @@ public class UserServiceImpl implements UserService {
         log.info("Creating newUser with email = {}", request.email());
         final boolean emailAlreadyExist = userRepository.existsByEmail(request.email());
 
+        final String code = CodeGeneratorUtils.generateSixDigitCode();
         if (emailAlreadyExist) {
             final User user = userRepository.findByUserEmail(request.email())
                     .orElseThrow(() -> new UserNotFoundException("User with email %s not found."));
 
-            if (!user.getIsActive() && !user.getArchived()) {
+            if (!user.isActive() && !user.isArchived()) {
                 log.info("User with email {} is not active, sending activation code again.", request.email());
 
-                if (createUseKafkaSender(user, MailType.SEND_REACTIVATION_CODE) != null) {
+                if (createUseKafkaSender(user, code, MailType.SEND_REACTIVATION_CODE) != null) {
                     return user.getUserId();
                 }
-                return null;
-            } else if (user.getArchived()) {
+            } else if (user.isArchived()) {
                 log.info("User with email {} is archived. Offer to restore the account.", request.email());
                 throw new UserAlreadyArchivedException("User with this email was archived, would you like to restore the account?");
             } else {
                 log.info("User with email {} is already active.", request.email());
-                throw new UserAlreadyActiveException("User with this email is already active. If this is not you, please contact support.");
+                throw new UserAlreadyActiveException("", request.email());
             }
         }
 
@@ -72,16 +75,16 @@ public class UserServiceImpl implements UserService {
         newUser.setEmail(request.email());
         newUser.setFullName(request.fullName());
 
-        final User sendedUser = createUseKafkaSender(newUser, MailType.SEND_ACTIVATION_CODE);
+        final User sendedUser = createUseKafkaSender(newUser, code, MailType.SEND_ACTIVATION_CODE);
 
         if (sendedUser != null) {
+            activationUserRepository.save(new ActivationUser(newUser.getUserId(), code));
             return userRepository.save(sendedUser).getUserId();
         }
         return null;
     }
 
-    private User createUseKafkaSender(User user, MailType type) throws JsonProcessingException {
-        final String code = CodeGeneratorUtils.generateSixDigitCode();
+    private User createUseKafkaSender(User user, String code, MailType type) throws JsonProcessingException {
         final ActivationMessage mailRequest = new ActivationMessage(
                 type,
                 user.getUserId(),
