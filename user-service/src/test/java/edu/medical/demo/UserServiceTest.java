@@ -58,7 +58,7 @@ public class UserServiceTest {
      * Тест на случай, когда пользователь уже активен, и выбрасывается исключение UserAlreadyActiveException.
      */
     @Test
-    void createUser_EmailAlreadyActive_ThrowsException() {
+    void createUserEmailAlreadyActiveThrowsException() {
         final User existingUser = createUser(UUID.randomUUID(), validRequest.email(), validRequest.fullName(), true, false);
 
         when(userRepository.existsByEmail(validRequest.email())).thenReturn(true);
@@ -77,7 +77,7 @@ public class UserServiceTest {
      * Тест на случай, когда пользователь архивирован, и выбрасывается исключение UserAlreadyArchivedException.
      */
     @Test
-    void createUser_UserArchived_ThrowsException() {
+    void createUserUserArchivedThrowsException() {
         final User existingUser = createUser(UUID.randomUUID(), validRequest.email(), validRequest.fullName(), false, true);
 
         when(userRepository.existsByEmail(validRequest.email())).thenReturn(true);
@@ -93,7 +93,7 @@ public class UserServiceTest {
      * Тест на случай, когда email не существует, создается новый пользователь и отправляется код активации.
      */
     @Test
-    void createUser_EmailNotExist_CreateNewUser() throws JsonProcessingException {
+    void createUserEmailNotExistCreateNewUser() throws JsonProcessingException {
         final UUID generatedUserId = UUID.randomUUID();
         final User savedUser = createUser(generatedUserId, validRequest.email(), validRequest.fullName(), false, false);
 
@@ -116,7 +116,7 @@ public class UserServiceTest {
      * Тест на случай, когда email уже существует, но пользователь неактивен, и отправляется код повторной активации.
      */
     @Test
-    void createUser_EmailAlreadyExist_InactiveUser_SendsReactivationCode() throws JsonProcessingException {
+    void createUserEmailAlreadyExistInactiveUserSendsReactivationCode() throws JsonProcessingException {
         final User existingUser = createUser(UUID.randomUUID(), validRequest.email(), validRequest.fullName(), false, false);
 
         when(userRepository.existsByEmail(validRequest.email())).thenReturn(true);
@@ -137,7 +137,7 @@ public class UserServiceTest {
      * Тест на случай, когда отправка кода активации не удалась, и метод возвращает null.
      */
     @Test
-    void createUser_SendingFails_ReturnsNull() throws JsonProcessingException {
+    void createUserSendingFailsReturnsNull() throws JsonProcessingException {
         when(userRepository.existsByEmail(validRequest.email())).thenReturn(false);
         when(kafkaProducerService.sendAuthenticationCode(any(ActivationMessage.class))).thenReturn(false);
 

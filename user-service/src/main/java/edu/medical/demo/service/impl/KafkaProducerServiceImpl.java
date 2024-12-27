@@ -30,8 +30,6 @@ public class KafkaProducerServiceImpl implements KafkaProducerService {
 
         final ObjectMapper objectMapper = new ObjectMapper();
         final String message = objectMapper.writeValueAsString(request);
-
-//        final String message = String.format("{\"email\": \"%s\", \"fullName\": \"%s\" ,\"code\": \"%s\"}", email, fullName, request.code());
         final CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("user-authentication-code", message);
 
         future.thenApply(result -> {

@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserService {
                 if (createUseKafkaSender(user, code, MailType.SEND_REACTIVATION_CODE) != null) {
                     return user.getUserId();
                 }
-                return null;
             } else if (user.isArchived()) {
                 log.info("User with email {} is archived. Offer to restore the account.", request.email());
                 throw new UserAlreadyArchivedException("User with this email was archived, would you like to restore the account?");

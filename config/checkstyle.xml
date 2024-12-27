@@ -157,7 +157,6 @@
         <module name="ClassDataAbstractionCoupling">
             <property name="max" value="13"/>
         </module>
-<!--        TODO: построить правильно тесты и код, чтобы упростить класс-->
         <module name="ClassFanOutComplexity">
             <property name="max" value="35"/>
         </module>
