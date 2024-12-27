@@ -6,6 +6,7 @@ import edu.medical.demo.exceptions.UserAlreadyArchivedException;
 import edu.medical.demo.model.User;
 import edu.medical.demo.model.dto.request.CreateUserRequest;
 import edu.medical.demo.models.request.ActivationMessage;
+import edu.medical.demo.repository.ActivationUserRepository;
 import edu.medical.demo.repository.UserRepository;
 import edu.medical.demo.service.KafkaProducerService;
 import edu.medical.demo.service.impl.UserServiceImpl;
@@ -39,6 +40,9 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
+    private ActivationUserRepository activationUserRepository;
+
+    @Mock
     private KafkaProducerService kafkaProducerService;
 
     private CreateUserRequest validRequest;
@@ -63,7 +67,7 @@ public class UserServiceTest {
         final UserAlreadyActiveException exception = assertThrows(UserAlreadyActiveException.class,
                 () -> userService.createUser(validRequest));
 
-        assertEquals("User with this email is already active. If this is not you, please contact support.",
+        assertEquals(UserAlreadyActiveException.DEFAULT_MESSAGE.formatted(existingUser.getEmail()),
                 exception.getMessage());
         verify(userRepository).existsByEmail(validRequest.email());
         verify(userRepository).findByUserEmail(validRequest.email());
@@ -150,7 +154,7 @@ public class UserServiceTest {
         user.setUserId(userId);
         user.setEmail(email);
         user.setFullName(fullName);
-        user.setIsActive(isActive);
+        user.setActive(isActive);
         user.setArchived(isArchived);
         return user;
     }

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
 public class UserAlreadyActiveException extends RuntimeException {
-    private static final String DEFAULT_MESSAGE = "User with this email = '%s' is already active.";
+    public static final String DEFAULT_MESSAGE = "User with this email = '%s' is already active.";
 
     public UserAlreadyActiveException(String message) {
         super(message);
