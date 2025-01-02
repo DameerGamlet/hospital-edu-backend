@@ -1,0 +1,30 @@
+---
+server:
+  port: 8081
+
+spring:
+  application:
+    name: doctor-service
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: update
+    properties:
+      hibernate:
+        generate_statistics: false
+        format_sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/doctor_db
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jackson:
+    auto-configure: false
+  kafka:
+    bootstrap-servers: localhost:${KAFKA_PORT}
+    producer:
+      acks: all
+      retries: 3
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
