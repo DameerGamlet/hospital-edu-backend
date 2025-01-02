@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/appointment-service" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/commons" />
+            <option value="$PROJECT_DIR$/doctor-service" />
             <option value="$PROJECT_DIR$/notification-service" />
             <option value="$PROJECT_DIR$/user-service" />
           </set>

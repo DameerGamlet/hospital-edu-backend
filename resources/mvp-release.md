@@ -47,10 +47,10 @@
 - [X] Добавить базовую структуру папок:
   ```
   com.hospital.user
-  ├── controller
+  ├── edu.medical.demo.controller
   ├── service
-  ├── repository
-  └── model
+  ├── edu.medical.demo.repository
+  └── edu.medical.demo.model
   ```
 - [X] Создать модель пользователя `User` с полями: ID, имя, email, телефон.
 - [X] Написать интерфейс репозитория `UserRepository`.
@@ -84,10 +84,10 @@
 - [ ] Добавить базовую структуру папок:
   ```
   com.hospital.appointment
-  ├── controller
+  ├── edu.medical.demo.controller
   ├── service
-  ├── repository
-  └── model
+  ├── edu.medical.demo.repository
+  └── edu.medical.demo.model
   ```
 - [ ] Создать модель записи `Appointment` с полями: ID, ID пользователя, ID врача, дата/время.
 - [ ] Написать интерфейс репозитория `AppointmentRepository`.
@@ -128,7 +128,7 @@
   com.hospital.notification
   ├── listener
   ├── service
-  └── model
+  └── edu.medical.demo.model
   ```
 - [ ] Написать Kafka Listener для обработки сообщений о новых записях.
 - [ ] Реализовать отправку email с использованием `JavaMailSender`.
