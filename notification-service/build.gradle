@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation libs.spring.cloud.eureka.client
     implementation libs.spring.kafka
     implementation libs.spring.mail
 }

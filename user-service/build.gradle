@@ -11,6 +11,8 @@ repositories {
 }
 
 dependencies {
+    implementation libs.spring.cloud.eureka.client
+
     implementation libs.spring.boot.starter.data.jpa
     implementation libs.jackson.databind
 

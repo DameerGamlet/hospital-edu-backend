@@ -4,4 +4,5 @@ include 'appointment-service'
 include 'notification-service'
 include 'commons'
 include 'doctor-service'
+include 'eureka-server'
 
