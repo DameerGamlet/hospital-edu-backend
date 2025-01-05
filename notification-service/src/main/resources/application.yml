@@ -6,6 +6,19 @@ spring:
     name: notification-service
   kafka:
     bootstrap-servers: localhost:${KAFKA_PORT}
+    consumer:
+      enable-auto-commit: false
+    producer:
+      acks: all
+      retries: 3
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    messaging:
+      kafka:
+        enabled: true
   mail:
     host: localhost
     port: 1025
@@ -30,11 +43,23 @@ management:
   endpoint:
     health:
       show-details: always
+  tracing:
+    enabled: true
+    sampling:
+      probability: 1
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-
+micrometer:
+  tracing:
+    export:
+      zipkin:
+        enabled: true
+        endpoint: http://localhost:9411/api/v2/spans
+logging:
+  level:
+    io.micrometer: DEBUG
 message-mail: |
   <div style="text-align: center;">    
     <h1>Больница</h1>    

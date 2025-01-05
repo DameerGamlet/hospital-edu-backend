@@ -70,9 +70,9 @@
 
 ### Создание сервиса
 
-- [ ] Создать папку `services/appointment-service`.
-- [ ] Инициализировать проект Spring Boot через Spring Initializr.
-- [ ] Добавить зависимости: **Spring Web**, **Spring Data JPA**, **Lombok**, **DevTools**.
+- [X] Создать папку `services/appointment-service`.
+- [X] Инициализировать проект Spring Boot через Spring Initializr.
+- [X] Добавить зависимости: **Spring Web**, **Spring Data JPA**, **Lombok**, **DevTools**.
 
 ### Настройка PostgreSQL
 
