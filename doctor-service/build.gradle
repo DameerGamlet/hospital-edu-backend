@@ -25,6 +25,10 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:5.14.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.14.2'
 
+    implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+    implementation 'io.zipkin.reporter2:zipkin-reporter-brave'
+    implementation 'io.zipkin.reporter2:zipkin-sender-kafka'
+    implementation 'io.zipkin.brave:brave-instrumentation-kafka-clients'
 //    implementation libs.spring.kafka
 }
 

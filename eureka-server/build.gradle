@@ -5,6 +5,7 @@ plugins {
 }
 
 group = 'edu.medical.demo'
+version = "0.0.1"
 
 repositories {
     mavenCentral()

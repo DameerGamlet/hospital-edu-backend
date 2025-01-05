@@ -73,6 +73,13 @@ services:
       - "${MAILDEV_WEB_PORT}:${MAILDEV_WEB_PORT}" # Web UI
       - "${MAILDEV_SMTP_PORT}:${MAILDEV_SMTP_PORT}" # SMTP
 
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: hospital-zipkin-container
+    restart: no
+    ports:
+      - "9411:9411"
+
 volumes:
   mongo_data:
   postgres_data:

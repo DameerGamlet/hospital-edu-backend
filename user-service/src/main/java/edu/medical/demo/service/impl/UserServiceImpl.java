@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
             final User user = userRepository.findByUserEmail(request.email())
                     .orElseThrow(() -> new UserNotFoundException("User with email %s not found."));
 
+            // TODO: Настроить, что нельзя отправлять запросы чаще, чем раз в 5 минут
             if (!user.isActive() && !user.isArchived()) {
                 log.info("User with email {} is not active, sending activation code again.", request.email());
 
