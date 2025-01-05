@@ -50,7 +50,7 @@ public class HospitalService {
                 Hospital.class
         );
 
-        query.setParameter("hospitalId", hospitalId);
+        query.setParameter("hospitalId", hospitalId.toString());
 
         return query.getSingleResult();
     }

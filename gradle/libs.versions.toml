@@ -11,6 +11,7 @@ jackson-databind-version = "2.18.2"
 aspectj-version = "1.9.22.1"
 
 spring-boot-version = "3.4.0"
+spring-cloud-version = "4.2.0"
 spring-kafka-version = "3.3.0"
 spring-security-version = "6.4.1"
 
@@ -39,6 +40,8 @@ springdoc-openapi = { group = "org.springdoc", name = "springdoc-openapi-ui", ve
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok-version" }
 
 spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa", version.ref = "spring-boot-version" }
+
+spring-cloud-eureka-client = { group = "org.springframework.cloud", name = "spring-cloud-starter-netflix-eureka-client", version.ref = "spring-cloud-version" }
 
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgres-version" }
 
