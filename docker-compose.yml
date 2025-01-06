@@ -80,6 +80,13 @@ services:
     ports:
       - "9411:9411"
 
+  eureka-server:
+    build:
+       context: .
+       dockerfile: ./eureka-server/Dockerfile
+    ports:
+       - "8761:8761"
+
 volumes:
   mongo_data:
   postgres_data:

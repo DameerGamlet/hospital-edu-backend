@@ -1,14 +1,11 @@
 # Используем официальный образ для Java
 FROM openjdk:17-jdk-slim
 
-# Устанавливаем рабочую директорию внутри контейнера
 WORKDIR /app
 
-# Копируем JAR-файл приложения в контейнер
-COPY target/eureka-server-0.0.1.jar eureka-server.jar
+# Копируем JAR файл из build/libs в контейнер
+COPY build/libs/eureka-server-0.0.1.jar /app/eureka-server.jar
 
-# Открываем порт, который будет использовать Eureka
-EXPOSE 8761
+# Указываем команду для запуска приложения
+CMD ["java", "-Dmicrometer.metrics.use-jvm-only=true", "-jar", "/app/eureka-server.jar"]
 
-# Запускаем приложение
-ENTRYPOINT ["java", "-jar", "eureka-server.jar"]
