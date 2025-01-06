@@ -4,6 +4,7 @@ import edu.medical.demo.model.Doctor;
 import edu.medical.demo.model.request.DoctorCreateRequest;
 import edu.medical.demo.model.response.DoctorCreateResponse;
 import edu.medical.demo.service.DoctorService;
+import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,8 @@ import java.util.List;
 public class DoctorServiceImpl implements DoctorService {
 
     private final SessionFactory sessionFactory;
+
+    private final MeterRegistry meterRegistry;
 
     /**
      * Создать запись о новом докторе.
@@ -44,6 +47,7 @@ public class DoctorServiceImpl implements DoctorService {
 
             if (isExist) {
                 session.getTransaction().rollback();
+                meterRegistry.counter("doctor_failed_created").increment();
                 return new DoctorCreateResponse(null, "User already exist");
             }
 
@@ -51,6 +55,7 @@ public class DoctorServiceImpl implements DoctorService {
             session.persist(doctor);
             session.getTransaction().commit();
 
+            meterRegistry.counter("doctor_success_created").increment();
             return new DoctorCreateResponse(doctor.getDoctorId(), null);
         } catch (Exception e) {
             final String errorMessage = "Ошибка при добавлении доктора: ";
@@ -70,6 +75,7 @@ public class DoctorServiceImpl implements DoctorService {
         } catch (Exception e) {
             final String errorMessage = "Ошибка при получении списка пользователей: ";
             log.error(errorMessage, e);
+            meterRegistry.counter("doctor_failed_get_list").increment();
             throw new RuntimeException(errorMessage + e);
         }
     }

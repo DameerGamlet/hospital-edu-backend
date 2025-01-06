@@ -19,6 +19,13 @@ spring:
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
+  cloud:
+    discovery:
+      enabled: true
+      eureka:
+        client:
+          service-url:
+            defaultZone: http://localhost:8761/eureka/
   jackson:
     auto-configure: false
   zipkin:
@@ -31,15 +38,29 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: "*"
   endpoint:
+    prometheus:
+      enabled: true
     health:
       show-details: always
+    metrics:
+      enabled: true
   tracing:
     enabled: true
     sampling:
       probability: 1
+#  metrics:
+#    enable:
+#      jvm: true
+#  web:
+#    base-path: /actuator
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+  instance:
+    metadata-map:
+      metrics.path: /actuator/prometheus
+      health.path: /actuator/health
+      management.context-path: /actuator
