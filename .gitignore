@@ -43,3 +43,4 @@ bin/
 /gradle.properties
 /kafka-data/
 /user-service/src/main/resources/gradle.properties
+/data/

@@ -12,3 +12,7 @@ eureka:
 management:
   metrics:
     enable-system: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"

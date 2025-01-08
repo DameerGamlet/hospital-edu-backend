@@ -25,7 +25,12 @@ public class HospitalController {
     }
 
     @GetMapping("/{hospitalId}")
-    public ResponseEntity<Hospital> getHospitalInfo(@PathVariable("hospitalId") UUID hospitalId) {
+    public ResponseEntity<Hospital> getHospitalInfo(@PathVariable UUID hospitalId) {
         return ResponseEntity.ok(hospitalService.getHospitalById(hospitalId));
+    }
+
+    @RequestMapping("/favicon.ico")
+    public void returnNoFavicon() {
+        // метод без действия
     }
 }
